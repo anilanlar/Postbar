@@ -1,0 +1,105 @@
+name: postbar
+description: Postbar App
+
+module:
+  androidPackage: com.vk.postbar
+  iosBundleIdentifier: com.vk.postbar
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  flutter: "3.3.3"
+  sdk: '>=2.18.1 <3.0.0'
+
+dependencies:
+  another_flushbar: ^1.12.29
+  awesome_notifications: ^0.7.4+1
+  cached_network_image: ^3.2.2
+  cloud_firestore: ^3.5.1
+  connectivity_plus: ^2.3.7
+  cupertino_icons: ^1.0.5
+  dio: ^4.0.6
+  dropdown_button2: ^1.9.2
+  equatable: ^2.0.5
+
+  #firebase
+  firebase_analytics: ^9.3.7
+  firebase_auth: ^3.11.0
+  firebase_core: ^1.24.0
+  firebase_crashlytics: ^2.8.12
+  firebase_database: ^9.1.6
+  firebase_messaging: ^13.0.4
+  firebase_remote_config: ^2.0.19
+  firebase_storage: ^10.3.10
+
+  #flutter
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_svg: ^1.1.5
+
+  gallery_saver: ^2.3.2
+
+  #get
+  get: ^4.6.5
+  get_storage: ^2.0.3
+
+  google_fonts: ^3.0.1
+  http: ^0.13.5
+  jiffy: ^5.0.0
+  package_info_plus: ^1.4.3+1
+  path_provider: ^2.0.11
+  rename: ^2.0.1
+  responsive_framework: ^0.2.0
+  screenshot: ^1.2.3
+  share_plus: ^4.4.0
+  universal_html: ^2.0.8
+  url_launcher: ^6.1.6
+  url_strategy: ^0.2.0
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.10.0
+  flutter_lints: ^2.0.1
+  flutter_native_splash: ^2.2.10+1
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/launcher/icon.png"
+  image_path_ios: "assets/launcher/icon.png"
+  adaptive_icon_background: #000000
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/launcher/
+    - assets/fonts/
+    - assets/svg/
+
+  fonts:
+    - family: VisbyCF
+      fonts:
+        - asset: assets/fonts/VisbyCF-Heavy.otf
+          weight: 900
+        - asset: assets/fonts/VisbyCF-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/VisbyCF-Bold.otf
+          weight: 700
+        - asset: assets/fonts/VisbyCF-DemiBold.otf
+          weight: 600
+        - asset: assets/fonts/VisbyCF-Regular.otf
+          weight: 400
+        - asset: assets/fonts/VisbyCF-Light.otf
+          weight: 300
+        - asset: assets/fonts/VisbyCF-Medium.otf
+          weight: 500
+        - asset: assets/fonts/VisbyCF-Thin.otf
+          weight: 200

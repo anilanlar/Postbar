@@ -1,0 +1,31 @@
+[
+  {
+    "family": "VisbyCF",
+    "fonts": [
+      {
+        "asset": "assets/fonts/VisbyCF-Heavy.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-ExtraBold.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-Bold.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-DemiBold.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-Regular.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-Light.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-Medium.otf"
+      },
+      {
+        "asset": "assets/fonts/VisbyCF-Thin.otf"
+      }
+    ]
+  }
+]
