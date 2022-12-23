@@ -14,13 +14,19 @@ class HomeController extends BaseRepositoryController<HomeRepository, HomeProvid
   HomeController() : super(repository: HomeRepository());
 
   VkUser? vkUser;
-  Rx<List<String?>>? designURLList;
+  Rx<List<String?>>? designPostURLList;
+  Rx<List<String?>>? designStoryURLList;
+
   String? chosenDesignURL;
   final RxString distributorName = "".obs;
   RxBool areDesignsLoading = true.obs;
 
   final Set<Design> selectedDesignList = <Design>{};
   final RxBool selectedDesignListChangeListener = false.obs;
+
+  RxString isPostorStory= RxString("Post");
+
+
 
   String get pageTitle {
     return "app.home.title".tr;
@@ -36,15 +42,9 @@ class HomeController extends BaseRepositoryController<HomeRepository, HomeProvid
 
 
 
-
   void designOnTapped({required String chosenImageURL}) {
     chosenDesignURL = chosenImageURL;
-    // Get.put(ExportController());
-    // print(Get.find<ExportController>().exportTest);
-
     Get.toNamed(AppRoutes.EXPORT);
-
-
   }
 
 
@@ -62,14 +62,16 @@ class HomeController extends BaseRepositoryController<HomeRepository, HomeProvid
 
   }
 
-  List<String?>? _getDesignList(VkUser? user) {
+  void _getDesignList(VkUser? user) {
     CustomProgressIndicator.openLoadingDialog();
-    final List<String?>? _designs = repository.getDesignList(user: user);
-    designURLList = Rx<List<String?>>(_designs!);
+    final List<String?>? _designPosts = repository.getDesignPostList(user: user);
+    final List<String?>? _designStories = repository.getDesignStoryList(user: user);
+
+    designPostURLList = Rx<List<String?>>(_designPosts!);
+    designStoryURLList = Rx<List<String?>>(_designStories!);
+
     areDesignsLoading.value = false;
     CustomProgressIndicator.closeLoadingOverlay();
-
-    return _designs ?? <String?>[];
   }
 
   @override

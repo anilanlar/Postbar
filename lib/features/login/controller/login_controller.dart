@@ -16,44 +16,56 @@ class LoginController extends BaseRepositoryController<LoginRepository, LoginPro
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> login() async {
-    if (!emailController.text.isEmail || passwordController.text.isEmpty) {
-      SnackbarToastUtil.showErrorSnackbar(
-        title: "app.login.credentials.empty.title".tr,
-        message: "app.login.credentials.empty.message".tr,
-      );
-      return;
+
+    dynamic uptodateChecker = (await GlobalVariables.firebase.firebaseDatabaseRef.child("0000_isUptodate").get()).value;
+    if (uptodateChecker["isUptodate"]==false){
+      AnilSnackBar.downloadSuccessFailSnackBar(
+          title: "UYARI",
+          message: "UYGULAMANIZI GÜNCELLEMENİZ GEREKMEKTEDİR");
+
+      debugPrint("not updated");
     }
+    else{
+      if (!emailController.text.isEmail || passwordController.text.isEmpty) {
+        SnackbarToastUtil.showErrorSnackbar(
+          title: "app.login.credentials.empty.title".tr,
+          message: "app.login.credentials.empty.message".tr,
+        );
+        return;
+      }
 
-    CustomProgressIndicator.openLoadingDialog();
-    try {
-      final UserCredential userCredential = await GlobalVariables.firebase.firebaseAuth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      CustomProgressIndicator.openLoadingDialog();
+      try {
+        final UserCredential userCredential = await GlobalVariables.firebase.firebaseAuth.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
-      if (userCredential.user != null) {
-         await CustomProgressIndicator.closeLoadingOverlay();
-        Get.offAllNamed(AppRoutes.HOME);
-      } else {
+        if (userCredential.user != null) {
+          await CustomProgressIndicator.closeLoadingOverlay();
+          Get.offAllNamed(AppRoutes.HOME);
+        } else {
+          await CustomProgressIndicator.closeLoadingOverlay();
+          SnackbarToastUtil.showErrorSnackbar(
+            title: "app.login.error.title".tr,
+            message: "app.login.error.message".tr,
+          );
+        }
+      } catch (e) {
+        debugPrint("LoginError: $e");
         await CustomProgressIndicator.closeLoadingOverlay();
         SnackbarToastUtil.showErrorSnackbar(
           title: "app.login.error.title".tr,
           message: "app.login.error.message".tr,
         );
       }
-    } catch (e) {
-      debugPrint("LoginError: $e");
-      await CustomProgressIndicator.closeLoadingOverlay();
-      SnackbarToastUtil.showErrorSnackbar(
-        title: "app.login.error.title".tr,
-        message: "app.login.error.message".tr,
-      );
     }
+
   }
 
   Future<void> contact() async {
     try {
-      launchUrl(Uri.parse("whatsapp://send?phone=+905376759017"));
+      launchUrl(Uri.parse("whatsapp://send?phone=+905412694524"));
     } catch (e) {
       debugPrint("LaunchWhatsappError: $e");
     }

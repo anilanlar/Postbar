@@ -29,7 +29,7 @@ class _Firebase {
 }
 
 class _Images {
-  String get appIconPath => "assets/launcher/icon.png";
+  String get appIconPath => "assets/launcher/iconP.png";
   String get appLogoPath => "assets/launcher/logo.png";
   String get appIconGifPath => "assets/launcher/icon_gif.gif";
   String get loadingIndicatorPath => "assets/launcher/loading_indicatior_dots.svg";

@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:postbar/core/utils/index.dart';
 import 'package:postbar/firebase_options.dart';
 import 'package:postbar/network/index.dart';
@@ -93,7 +94,8 @@ class FirebaseUtil {
     GlobalVariables.firebase.firebaseDatabase = FirebaseDatabase.instanceFor(app: GlobalVariables.firebase.firebaseApp);
 
     debugPrint("krelease  "+ kReleaseMode.toString());
-    GlobalVariables.firebase.firebaseDatabaseRef = GlobalVariables.firebase.firebaseDatabase.ref(Url.stagingPathFB);
+    GlobalVariables.firebase.firebaseDatabaseRef = GlobalVariables.firebase.firebaseDatabase.ref(kReleaseMode ? Url.stagingPathFB : Url.productionPathFB);
+
   }
 
   Future<void> _firebaseRemoteConfig() async {

@@ -11,7 +11,8 @@ abstract class IHomeProvider {}
 class HomeProvider extends BaseProvider implements IHomeProvider {}
 
 abstract class IHomeRepository {
-  List<String?>? getDesignList({required VkUser? user});
+  List<String?>? getDesignPostList({required VkUser? user});
+  List<String?>? getDesignStoryList({required VkUser? user});
   Future<VkUser?> getUserInfo({required String uid});
 }
 
@@ -19,12 +20,19 @@ class HomeRepository extends BaseRepository<HomeProvider> implements IHomeReposi
   HomeRepository() : super(provider: HomeProvider());
 
   @override
-  List<String?>? getDesignList({required VkUser? user}) {
+  List<String?>? getDesignPostList({required VkUser? user}) {
     if (user == null) {
       return null;
     }
-    return user.designList;
+    return user.designPostList;
+  }
 
+  @override
+  List<String?>? getDesignStoryList({required VkUser? user}) {
+    if (user == null) {
+      return null;
+    }
+    return user.designStoryList;
   }
 
   @override

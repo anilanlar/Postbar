@@ -34,7 +34,7 @@ class HomeScreen extends GetView<HomeController> {
         0.01;
     const double _aspectRatio = 1;
     final double _designHeight = _designWidth * (1 / _aspectRatio);
-
+    
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -107,21 +107,20 @@ class HomeScreen extends GetView<HomeController> {
                 if (controller.areDesignsLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
-                  final List<Widget> _children = <Widget>[];
 
-                  int _cachedLength = 0;
-                  if (controller.designURLList != null) {
-                    _cachedLength = controller.designURLList!.value.length;
+                  // FILL OUT POSTS
+                  final List<Widget> _childrenPosts = <Widget>[];
+                  int _cachedLengthPosts = 0;
+                  if (controller.designPostURLList != null) {
+                    _cachedLengthPosts = controller.designPostURLList!.value.length;
                   } else {
-                    debugPrint("cachedLength could not be assigned");
+                    debugPrint("cachedLengthPOSTS could not be assigned");
                   }
-
-                  for (int i = 0; i < _cachedLength; i++) {
+                  for (int i = 0; i < _cachedLengthPosts; i++) {
                     String designURL =
-                        controller.designURLList!.value.elementAt(i)!;
-
-                    _children.add(
-                      DesignContainer(
+                        controller.designPostURLList!.value.elementAt(i)!;
+                    _childrenPosts.add(
+                      DesignPostContainer(
                         onTap: () => controller.designOnTapped(
                             chosenImageURL: designURL),
                         // onTap: () => {print("designTapped")},
@@ -133,45 +132,71 @@ class HomeScreen extends GetView<HomeController> {
                     );
                   }
 
+                  // FILL OUT STORIES
+                  final List<Widget> _childrenStories = <Widget>[];
+                  int _cachedLengthStories = 0;
+                  if (controller.designStoryURLList != null) {
+                    _cachedLengthStories = controller.designStoryURLList!.value.length;
+                  } else {
+                    debugPrint("cachedLengthST0RIES could not be assigned");
+                  }
+                  for (int i = 0; i < _cachedLengthStories; i++) {
+                    String designURL =
+                    controller.designStoryURLList!.value.elementAt(i)!;
+                    _childrenStories.add(
+                      DesignStoryContainer(
+                        onTap: () => controller.designOnTapped(
+                            chosenImageURL: designURL),
+                        imageURL: designURL,
+                        width: 168.87528,
+                        height: 300.22272,
+                      ),
+                    );
+                  }
+
+
+
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        _topButtons(),
-                        ListView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          cacheExtent: _designHeight + _designSpacing,
-                          addAutomaticKeepAlives: true,
-                          addRepaintBoundaries: false,
-                          itemCount: (_children.length ~/ _designRowCount) + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            final List<Widget> _rowWidgets = <Widget>[];
-                            for (int i = 0; i < _designRowCount; i++) {
-                              try {
-                                _rowWidgets.add(
-                                    _children[(index * _designRowCount) + i]);
-                                if (i != _designRowCount - 1) {
-                                  _rowWidgets.add(const Spacer());
-                                }
-                              } catch (e) {
-                                debugPrint("Can't add new design to the list");
-                              }
-                            }
-                            return Padding(
-                              padding: EdgeInsets.only(bottom: _designSpacing),
-                              child: SizedBox(
-                                height: _designHeight,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: _rowWidgets,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+
+                        _topButtons(controller),
+                        _body(controller.isPostorStory,_designHeight,_designSpacing,_designRowCount,_childrenPosts,_childrenStories),
+                        // ListView.builder(
+                        //   physics: const ClampingScrollPhysics(),
+                        //   padding: EdgeInsets.zero,
+                        //   shrinkWrap: true,
+                        //   cacheExtent: _designHeight + _designSpacing,
+                        //   addAutomaticKeepAlives: true,
+                        //   addRepaintBoundaries: false,
+                        //   itemCount: (_children.length ~/ _designRowCount) + 1,
+                        //   itemBuilder: (BuildContext context, int index) {
+                        //     final List<Widget> _rowWidgets = <Widget>[];
+                        //     for (int i = 0; i < _designRowCount; i++) {
+                        //       try {
+                        //         _rowWidgets.add(
+                        //             _children[(index * _designRowCount) + i]);
+                        //         if (i != _designRowCount - 1) {
+                        //           _rowWidgets.add(const Spacer());
+                        //         }
+                        //       } catch (e) {
+                        //         debugPrint("Can't add new design to the list");
+                        //       }
+                        //     }
+                        //     return Padding(
+                        //       padding: EdgeInsets.only(bottom: _designSpacing),
+                        //       child: SizedBox(
+                        //         height: _designHeight,
+                        //         child: Row(
+                        //           mainAxisSize: MainAxisSize.max,
+                        //           mainAxisAlignment: MainAxisAlignment.start,
+                        //           crossAxisAlignment: CrossAxisAlignment.center,
+                        //           children: _rowWidgets,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   );
@@ -185,7 +210,87 @@ class HomeScreen extends GetView<HomeController> {
   }
 }
 
-Widget _topButtons() {
+
+
+Widget _body(RxString isPostorStory, double _designHeight,double _designSpacing,
+    int _designRowCount, List<Widget> _childrenPosts ,List<Widget> _childrenStories){
+  if(isPostorStory == "Post"){
+    return  ListView.builder(
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      cacheExtent: _designHeight + _designSpacing,
+      addAutomaticKeepAlives: true,
+      addRepaintBoundaries: false,
+      itemCount: (_childrenPosts.length ~/ _designRowCount) + 1,
+      itemBuilder: (BuildContext context, int index) {
+        final List<Widget> _rowWidgets = <Widget>[];
+        for (int i = 0; i < _designRowCount; i++) {
+          try {
+            _rowWidgets.add(
+                _childrenPosts[(index * _designRowCount) + i]);
+            if (i != _designRowCount - 1) {
+              _rowWidgets.add(const Spacer());
+            }
+          } catch (e) {
+            debugPrint("Can't add new design to the list");
+          }
+        }
+        return Padding(
+          padding: EdgeInsets.only(bottom: _designSpacing),
+          child: SizedBox(
+            height: _designHeight,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _rowWidgets,
+            ),
+          ),
+        );
+      },
+    );
+  }else{
+    return ListView.builder(
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      cacheExtent: _designHeight + _designSpacing,
+      addAutomaticKeepAlives: true,
+      addRepaintBoundaries: false,
+      itemCount: (_childrenStories.length ~/ _designRowCount) + 1,
+      itemBuilder: (BuildContext context, int index) {
+        final List<Widget> _rowWidgets = <Widget>[];
+        for (int i = 0; i < _designRowCount; i++) {
+          try {
+            _rowWidgets.add(
+                _childrenStories[(index * _designRowCount) + i]);
+            if (i != _designRowCount - 1) {
+              // _rowWidgets.add(const Spacer());
+            }
+          } catch (e) {
+            debugPrint("Can't add new design to the list");
+          }
+        }
+        return Padding(
+          padding: EdgeInsets.only(bottom: _designSpacing),
+          child: SizedBox(
+            height: 300.22272,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _rowWidgets,
+            ),
+          ),
+        );
+      },
+    );
+
+  }
+}
+
+Widget _topButtons(HomeController controller) {
   return Container(
     height: 100,
     child: Row(
@@ -195,45 +300,17 @@ Widget _topButtons() {
           width: 170,
           child: CustomGradientButton(
             fontSize: 10,
-            // gradient: const LinearGradient(
-            //   colors: <Color>[
-            //     ThemeColors.thirdColor,
-            //      ThemeColors.fourthColor,
-            //   ],
-            //   begin: Alignment.centerLeft,
-            //   end: Alignment.centerRight,
-            // ),
-            text: "Postlar".tr.toUpperCase(),
-            onPressed: () {},
+            text: "GÖNDERİ".tr.toUpperCase(),
+            onPressed: () {controller.isPostorStory.value ="Post";},
           ),
         ),
         Container(
           width: 170,
           child: CustomGradientButton(
             fontSize: 10,
-            // gradient: const LinearGradient(
-            //   colors: <Color>[
-            //     ThemeColors.thirdColor,
-            //      ThemeColors.fourthColor,
-            //   ],
-            //   begin: Alignment.centerLeft,
-            //   end: Alignment.centerRight,
-            // ),
-            text: "Hikayeler".tr.toUpperCase(),
-            onPressed: () {
-              Get.snackbar("YAKINDA",
-                  "Şubenize özel tasarlanmış hikayeler çok yakında sizlerle",
-                  colorText: Colors.white,
-                  backgroundGradient: const LinearGradient(
-                    colors: <Color>[
-                      ThemeColors.thirdColor,
-                       ThemeColors.fourthColor,
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-              );
-            },
+            text: "HİKAYE".tr.toUpperCase(),
+            onPressed: () {controller.isPostorStory.value ="Story";},
+
           ),
         ),
       ],
@@ -241,8 +318,9 @@ Widget _topButtons() {
   );
 }
 
-class DesignContainer extends StatefulWidget {
-  const DesignContainer({
+
+class DesignStoryContainer extends StatefulWidget {
+  const DesignStoryContainer({
     Key? key,
     this.onTap,
     required this.imageURL,
@@ -256,10 +334,95 @@ class DesignContainer extends StatefulWidget {
   final double height;
 
   @override
-  State<DesignContainer> createState() => _DesignContainerState();
+  State<DesignStoryContainer> createState() => _DesignStoryContainerState();
 }
 
-class _DesignContainerState extends State<DesignContainer>
+class _DesignStoryContainerState extends State<DesignStoryContainer>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+            elevation: 4,
+            child: AnimatedContainer(
+              clipBehavior: Clip.hardEdge,
+              duration: const Duration(milliseconds: 100),
+              width: widget.width,
+              height: widget.height,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                border: null,
+              ),
+              child: CachedNetworkImage(
+                imageUrl: widget.imageURL ?? '',
+                imageBuilder: (BuildContext context,
+                    ImageProvider<Object> imageProvider) =>
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                placeholder: (BuildContext context, String url) => const Center(
+                  child: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                ),
+                errorWidget:
+                    (BuildContext context, String url, dynamic error) =>
+                const SizedBox(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+
+
+
+
+
+
+
+class DesignPostContainer extends StatefulWidget {
+  const DesignPostContainer({
+    Key? key,
+    this.onTap,
+    required this.imageURL,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
+
+  final VoidCallback? onTap;
+  final String imageURL;
+  final double width;
+  final double height;
+
+  @override
+  State<DesignPostContainer> createState() => _DesignPostContainerState();
+}
+
+class _DesignPostContainerState extends State<DesignPostContainer>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
@@ -430,7 +593,7 @@ class MenuItems {
     switch (item) {
       case MenuItems.share:
         try {
-          launchUrl(Uri.parse("whatsapp://send?phone=+905376759017"));
+          launchUrl(Uri.parse("whatsapp://send?phone=+905412694524"));
         } catch (e) {
           debugPrint("LaunchWhatsappError: $e");
         }
