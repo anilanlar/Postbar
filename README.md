@@ -7,23 +7,21 @@ platforms with a single click, without deviating from the franchise’s brand id
 
 ## App Logo
 
-<p float="left">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg1.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg2.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg3.jpg" width="250" height="512">
-</p>
 
-<p float="left">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg4.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg5.jpg" width="250" height="512">
-</p>
 
 <img src="https://github.com/anilanlar/postbar/blob/master/assets/launcher/icon_gif.gif" width="500" height="500">
 
 ## Images from Google Play Store and App Store
 
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg1.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg2.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg3.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg4.jpg" width="250" height="512">
-<img src="https://github.com/anilanlar/postbar/blob/master/assets/pg5.jpg" width="250" height="512">
+<p float="left">
+  <img src="https://github.com/anilanlar/postbar/blob/master/assets/pg1.jpg" width="250" height="512">
+  <img src="https://github.com/anilanlar/postbar/blob/master/assets/pg2.jpg" width="250" height="512">
+  <img src="https://github.com/anilanlar/postbar/blob/master/assets/pg3.jpg" width="250" height="512">
+</p>
+
+<p float="left">
+  <br style="line-width: 50px;">
+
+  <img src="https://github.com/anilanlar/postbar/blob/master/assets/pg4.jpg" width="250" height="512">
+  <img src="https://github.com/anilanlar/postbar/blob/master/assets/pg5.jpg" width="250" height="512">
+</p>
