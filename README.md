@@ -11,7 +11,7 @@ platforms with a single click, without deviating from the franchise’s brand id
 
 ## Images from Google Play Store and App Store
 
-!["Store Image"](https://github.com/anilanlar/postbar/blob/master/assets/pg1.jpg)
+!["Store Image"](https://github.com/anilanlar/postbar/blob/master/assets/pg1.jpg = 100x100)
 !["Store Image"](https://github.com/anilanlar/postbar/blob/master/assets/pg2.jpg)
 !["Store Image"](https://github.com/anilanlar/postbar/blob/master/assets/pg3.jpg)
 !["Store Image"](https://github.com/anilanlar/postbar/blob/master/assets/pg4.jpg)
