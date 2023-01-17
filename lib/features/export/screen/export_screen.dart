@@ -243,139 +243,56 @@ class ExportDesignPageFilesReady extends GetView<ExportController> {
     final double _screenWidth = MediaQuery.of(context).size.width;
     final double _screenHeight = MediaQuery.of(context).size.height;
 
-    const double _maxWidth = 600;
-    const double _maxHeight = 600;
-    // double _containerWidth =
-    //     (_width * 0.8) >= _maxWidth ? _maxWidth : (_width * 0.8);
-    // double _containerHeight =
-    //     (_height * 0.5) >= _maxHeight ? _maxHeight : (_height * 0.5);
-    // _containerHeight = min(_containerHeight, _containerWidth);
-    // _containerWidth = _containerHeight;
-    if(controller.homeController.isPostorStory.value=="Post"){return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
+    //PLATFORM IS ANDROID
+    if(Theme.of(context).platform == TargetPlatform.android){
+      if(controller.homeController.isPostorStory.value=="Post"){return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
 
-        //CANVAS CONTAINER
-        // FittedBox(
-        //   child: readyDesign(,_screenWidth),
-        // ),
-        FittedBox(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.high,
-                image: MemoryImage(
-                  Uint8List.view(controller.generatedImage!),
+          //CANVAS CONTAINER
+          FittedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
+                  image: MemoryImage(
+                    Uint8List.view(controller.generatedImage!),
+                  ),
                 ),
               ),
+              width: _screenWidth* 0.9,
+              height: _screenWidth * 0.9,
             ),
-            width: _screenWidth* 0.9,
-            height: _screenWidth * 0.9,
           ),
-        ),
-        if (!kIsWeb)
+          if (!kIsWeb)
+            SizedBox(
+              height: 45,
+              width: _screenWidth * 0.4,
+              child: CustomGradientButton(
+                text: "app.designs.share".tr.toUpperCase(),
+                onPressed: controller.shareDesign,
+              ),
+            ),
+          // if (!kIsWeb) const Spacer(),
+          // const SizedBox(height: 15),
+
           SizedBox(
             height: 45,
             width: _screenWidth * 0.4,
             child: CustomGradientButton(
-              text: "app.designs.share".tr.toUpperCase(),
-              onPressed: controller.shareDesign,
+              text: "app.designs.download".tr.toUpperCase(),
+              onPressed: controller.downloadDesign,
             ),
           ),
-        // if (!kIsWeb) const Spacer(),
-        // const SizedBox(height: 15),
-
-        SizedBox(
-          height: 45,
-          width: _screenWidth * 0.4,
-          child: CustomGradientButton(
-            text: "app.designs.download".tr.toUpperCase(),
-            onPressed: controller.downloadDesign,
-          ),
-        ),
-        // const Spacer(flex: !kIsWeb ? 3 : 2),
-        // const SizedBox(height: 15),
-        Container(
-          height: 45,
-          width: _screenWidth * 0.4,
-          color: Colors.transparent,
-          child: CustomGradientButton(
-            boxShadow: const <BoxShadow>[
-              BoxShadow(
-                color: Colors.white,
-                blurRadius: 40,
-                offset: Offset.zero,
-              ),
-            ],
-            gradient: const LinearGradient(
-              colors: <Color>[
-                ThemeColors.thirdColor,
-                ThemeColors.fourthColor,
-              ],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
-            text: "app.designs.discover".tr.toUpperCase(),
-            onPressed: controller.discoverMore,
-          ),
-        ),
-
-      ],
-    );}
-    else{
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          // const SizedBox(height: 20),
-          // Spacer()
-          Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.high,
-              image: MemoryImage(
-                Uint8List.view(controller.generatedImage!),
-              ),
-            ),
-          ),
-          width: _screenHeight* 0.6 * 1080/1920 ,
-          height: _screenHeight* 0.6,
-    ),
-          // const SizedBox(height: 20),
-
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-
-            if (!kIsWeb)
-              SizedBox(
-                height: 45,
-                width: _screenWidth * 0.35,
-                child: CustomGradientButton(
-                  text: "app.designs.share".tr.toUpperCase(),
-                  onPressed: controller.shareDesign,
-                ),
-              ),
-            // if (!kIsWeb) const Spacer(),
-            SizedBox(
-              height: 45,
-              width: _screenWidth * 0.35,
-              child: CustomGradientButton(
-                text: "app.designs.download".tr.toUpperCase(),
-                onPressed: controller.downloadDesign,
-              ),
-            ),
-            // const Spacer(flex: !kIsWeb ? 3 : 2),
-
-          ]),
-          // const SizedBox(height: 20),
-
+          // const Spacer(flex: !kIsWeb ? 3 : 2),
+          // const SizedBox(height: 15),
           Container(
             height: 45,
-            width: _screenWidth * 0.35,
+            width: _screenWidth * 0.4,
             color: Colors.transparent,
             child: CustomGradientButton(
               boxShadow: const <BoxShadow>[
@@ -397,17 +314,227 @@ class ExportDesignPageFilesReady extends GetView<ExportController> {
               onPressed: controller.discoverMore,
             ),
           ),
+
         ],
       );}
+      else{
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // const SizedBox(height: 20),
+            // Spacer()
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                  image: MemoryImage(
+                    Uint8List.view(controller.generatedImage!),
+                  ),
+                ),
+              ),
+              width: _screenHeight* 0.6 * 1080/1920 ,
+              height: _screenHeight* 0.6,
+            ),
+            // const SizedBox(height: 20),
+
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+
+              if (!kIsWeb)
+                SizedBox(
+                  height: 45,
+                  width: _screenWidth * 0.35,
+                  child: CustomGradientButton(
+                    text: "app.designs.share".tr.toUpperCase(),
+                    onPressed: controller.shareDesign,
+                  ),
+                ),
+              // if (!kIsWeb) const Spacer(),
+              SizedBox(
+                height: 45,
+                width: _screenWidth * 0.35,
+                child: CustomGradientButton(
+                  text: "app.designs.download".tr.toUpperCase(),
+                  onPressed: controller.downloadDesign,
+                ),
+              ),
+              // const Spacer(flex: !kIsWeb ? 3 : 2),
+
+            ]),
+            // const SizedBox(height: 20),
+
+            Container(
+              height: 45,
+              width: _screenWidth * 0.35,
+              color: Colors.transparent,
+              child: CustomGradientButton(
+                boxShadow: const <BoxShadow>[
+                  BoxShadow(
+                    color: Colors.white,
+                    blurRadius: 40,
+                    offset: Offset.zero,
+                  ),
+                ],
+                gradient: const LinearGradient(
+                  colors: <Color>[
+                    ThemeColors.thirdColor,
+                    ThemeColors.fourthColor,
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                text: "app.designs.discover".tr.toUpperCase(),
+                onPressed: controller.discoverMore,
+              ),
+            ),
+          ],
+        );}
+    }
+
+    //PLATFORM IS IOS
+    else{
+      if(controller.homeController.isPostorStory.value=="Post"){return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+
+          //CANVAS CONTAINER
+          FittedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
+                  image: MemoryImage(
+                    Uint8List.view(controller.generatedImage!),
+                  ),
+                ),
+              ),
+              width: _screenWidth* 0.9,
+              height: _screenWidth * 0.9,
+            ),
+          ),
+          if (!kIsWeb)
+            SizedBox(
+              height: 45,
+              width: _screenWidth * 0.4,
+              child: CustomGradientButton(
+                text: "app.designs.share".tr.toUpperCase(),
+                onPressed: controller.shareDesign,
+              ),
+            ),
+          // if (!kIsWeb) const Spacer(),
+          // const SizedBox(height: 15),
+          // const Spacer(flex: !kIsWeb ? 3 : 2),
+          // const SizedBox(height: 15),
+          Container(
+            height: 45,
+            width: _screenWidth * 0.4,
+            color: Colors.transparent,
+            child: CustomGradientButton(
+              boxShadow: const <BoxShadow>[
+                BoxShadow(
+                  color: Colors.white,
+                  blurRadius: 40,
+                  offset: Offset.zero,
+                ),
+              ],
+              gradient: const LinearGradient(
+                colors: <Color>[
+                  ThemeColors.thirdColor,
+                  ThemeColors.fourthColor,
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              text: "app.designs.discover".tr.toUpperCase(),
+              onPressed: controller.discoverMore,
+            ),
+          ),
+
+        ],
+      );}
+      else{
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // const SizedBox(height: 20),
+            // Spacer()
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                  image: MemoryImage(
+                    Uint8List.view(controller.generatedImage!),
+                  ),
+                ),
+              ),
+              width: _screenHeight* 0.6 * 1080/1920 ,
+              height: _screenHeight* 0.6,
+            ),
+            // const SizedBox(height: 20),
+
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+
+              if (!kIsWeb)
+
+              // if (!kIsWeb) const Spacer(),
+              Container(
+                height: 45,
+                width: _screenWidth * 0.35,
+                color: Colors.transparent,
+                child: CustomGradientButton(
+                  boxShadow: const <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.white,
+                      blurRadius: 40,
+                      offset: Offset.zero,
+                    ),
+                  ],
+                  gradient: const LinearGradient(
+                    colors: <Color>[
+                      ThemeColors.thirdColor,
+                      ThemeColors.fourthColor,
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  text: "app.designs.discover".tr.toUpperCase(),
+                  onPressed: controller.discoverMore,
+                ),
+              ),
+
+              SizedBox(
+                height: 45,
+                width: _screenWidth * 0.35,
+                child: CustomGradientButton(
+                  text: "app.designs.share".tr.toUpperCase(),
+                  onPressed: controller.shareDesign,
+                ),
+              ),
+            ]),
+            // const SizedBox(height: 20),
+
+
+          ],
+        );}
+    }
+
+
+
+
   }
 
-  Widget readyDesign(String isPostorStory, double _screenWidth) {
+  Widget _readyDesign(String isPostorStory, double _screenWidth) {
     if (isPostorStory == "Post") {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
-
         ],
       );
     } else {
